@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 
 /**
  *
@@ -35,7 +36,19 @@ public class PDFCreatorv1 extends Application {
             public void handle(ActionEvent event) {
                 System.out.println("Hello World!");
                 try {
+                    
+                    document.addPage(PDRectangle.A4);
+                    document.addImage("d:\\image.jpg");
+                    document.addImage("d:\\image.jpg");
+                    
+                    document.addPage(PDRectangle.A4);
+                    document.addImage("d:\\image.jpg");
+                    document.addImage("d:\\image1.jpg");
+                    
+                    document.addPage(PDRectangle.A4);
+                    
                     document.createPdfFile("d:\\temp.pdf");
+                    
                 } catch (IOException ex) {
                     Logger.getLogger(PDFCreatorv1.class.getName()).log(Level.SEVERE, null, ex);
                 }
