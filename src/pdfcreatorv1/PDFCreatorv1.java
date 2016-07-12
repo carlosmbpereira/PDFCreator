@@ -5,7 +5,10 @@
  */
 package pdfcreatorv1;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import static java.lang.System.in;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -37,15 +40,29 @@ public class PDFCreatorv1 extends Application {
                 System.out.println("Hello World!");
                 try {
                     
-                    document.addPage(PDRectangle.A4);
-                    document.addImage("d:\\image.jpg");
-                    document.addImage("d:\\image.jpg");
                     
-                    document.addPage(PDRectangle.A4);
-                    document.addImage("d:\\image.jpg");
-                    document.addImage("d:\\image1.jpg");
+                    //list specific files
+                    File f = new File("D:\\Camera - Copy");
+                    File[] list = f.listFiles(new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String name) {
+                        return name.toLowerCase().endsWith(".jpg");
+                    };
+                    });
                     
-                    document.addPage(PDRectangle.A4);
+                    int i=1;
+                    
+                    System.out.println("Tamanho"+list.length);
+                    
+                    for(File ficheiro:list) {
+                        document.addImage(ficheiro.toString());
+                        if((i%5)==0) {
+                            document.savePdfFile("d:\\temp.pdf");
+                            System.out.println("salva...");
+                        }
+                        System.out.println(i++);
+                    }               
+
                     
                     document.createPdfFile("d:\\temp.pdf");
                     

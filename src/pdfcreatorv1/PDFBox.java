@@ -44,26 +44,38 @@ public class PDFBox {
         }
     }
     
+        void savePdfFile(String f) throws IOException
+    {
+
+            document.save(f);
+
+    }
+    
     void addImage(String f) {
        
+        float width, height;
         
         try {
-            contents = new PDPageContentStream(document, current_page, AppendMode.APPEND, true, true);
-
+       
+            //determines the image size
             pdImage = PDImageXObject.createFromFile(f, document);
+            height=pdImage.getHeight();
+            width=pdImage.getWidth();
+            
+            //creates the page with the image size
+            current_page = new PDPage(new PDRectangle(width,height));
+            document.addPage(current_page);
+            
+            contents = new PDPageContentStream(document, current_page, AppendMode.APPEND, true, true);
 
             contents.drawImage(pdImage,0,0);
 
             contents.close();
+            
         } catch (IOException ex) {
             Logger.getLogger(PDFBox.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
     
-    void addPage(PDRectangle p) {
-        
-        current_page = new PDPage(p);
-        document.addPage(current_page);
-    }
 }
