@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -33,45 +34,9 @@ public class PDFCreatorv1 extends Application {
         document=new PDFBox();
         Button btn = new Button();
         btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-                try {
-                    
-                    
-                    //list specific files
-                    File f = new File("D:\\Camera - Copy");
-                    File[] list = f.listFiles(new FilenameFilter() {
-                    @Override
-                    public boolean accept(File dir, String name) {
-                        return name.toLowerCase().endsWith(".jpg");
-                    };
-                    });
-                    
-                    int i=1;
-                    
-                    System.out.println("Tamanho"+list.length);
-                    
-                    for(File ficheiro:list) {
-                        document.addImage(ficheiro.toString());
-                        if((i%5)==0) {
-                            document.savePdfFile("d:\\temp.pdf");
-                            System.out.println("salva...");
-                        }
-                        System.out.println(i++);
-                    }               
+        btn.setOnAction(document::handle);
 
-                    
-                    document.createPdfFile("d:\\temp.pdf");
-                    
-                } catch (IOException ex) {
-                    Logger.getLogger(PDFCreatorv1.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-        
+
         StackPane root = new StackPane();
         root.getChildren().add(btn);
         
